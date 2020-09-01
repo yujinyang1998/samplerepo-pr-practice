@@ -68,7 +68,7 @@ public class Duke {
         int listCounter = 1;
         while(i.hasNext()){
             Task printTask = i.next();
-            System.out.println(listCounter + ".[" + printTask.getStatusIcon() + "] " + printTask.description);
+            System.out.println(listCounter + "." + dataStorage.get(listCounter - 1).toString());
             listCounter++;
         }
     }
