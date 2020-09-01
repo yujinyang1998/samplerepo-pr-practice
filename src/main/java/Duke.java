@@ -26,43 +26,84 @@ public class Duke {
                     break;
 
                 case "list":
-                    Iterator<Task> i = dataStorage.iterator();
-                    int listCounter = 1;
-                    while(i.hasNext()){
-                        Task printTask = i.next();
-                        System.out.println(listCounter + ".[" + printTask.getStatusIcon() + "] " + printTask.description);
-                        listCounter++;
-                    }
+                    printList(dataStorage);
                     break;
 
                 case "done":
-                    if(input.split(" ").length>2 || !input.split(" ")[1].matches("^-?\\d+$")){
-                        System.out.println("Invalid input.");
-                        break;
-                    }
-                    int completedIndex = Integer.parseInt(input.split(" ")[1].trim());
-
-                    if(completedIndex <= counter && !dataStorage.get(completedIndex - 1).isDone){
-                        Task replacement = new Task(dataStorage.get(completedIndex-1).description);
-                        replacement.isDone = true;
-                        dataStorage.set(completedIndex-1,replacement);
-                        System.out.println("Nice! I've marked this task as done: ");
-                        System.out.println("[" + dataStorage.get(completedIndex-1).getStatusIcon() + "]" + dataStorage.get(completedIndex-1).description);
-                    }else if(completedIndex <= counter && dataStorage.get(completedIndex - 1).isDone){
-                        System.out.println("The task has already been marked as completed.");
-                    }else{
-                        System.out.println("This task does not exist.");
-                    }
+                    markAsDone(input, dataStorage, counter);
                     break;
 
                 default:
-                    Task newTask = new Task(input);
-                    dataStorage.add(newTask);
-                    System.out.println("added: " + input);
-                    counter++;
+                    counter = addTask(input, dataStorage, counter);
             }
         }
 
         SystemMessages.goodbyeMessage();
+    }
+
+    private static void markAsDone(String input, Vector<Task> dataStorage, int counter) {
+        //checking for invalid input
+        if(input.split(" ").length>2 || !input.split(" ")[1].matches("^-?\\d+$")){
+            System.out.println("Invalid input.");
+            return;
+        }
+
+        int completedIndex = Integer.parseInt(input.split(" ")[1].trim());
+
+        if(completedIndex <= counter && !dataStorage.get(completedIndex - 1).isDone){
+            Task replacement = new Task(dataStorage.get(completedIndex-1).description);
+            replacement.isDone = true;
+            dataStorage.set(completedIndex-1,replacement);
+            System.out.println("Nice! I've marked this task as done: ");
+            System.out.println("[" + dataStorage.get(completedIndex-1).getStatusIcon() + "]" + dataStorage.get(completedIndex-1).description);
+        }else if(completedIndex <= counter && dataStorage.get(completedIndex - 1).isDone){
+            System.out.println("The task has already been marked as completed.");
+        }else{
+            System.out.println("This task does not exist.");
+        }
+    }
+
+    private static void printList(Vector<Task> dataStorage) {
+        Iterator<Task> i = dataStorage.iterator();
+        int listCounter = 1;
+        while(i.hasNext()){
+            Task printTask = i.next();
+            System.out.println(listCounter + ".[" + printTask.getStatusIcon() + "] " + printTask.description);
+            listCounter++;
+        }
+    }
+
+    private static int addTask(String input, Vector<Task> dataStorage, int counter) {
+        switch (input.toLowerCase().split(" ")[0]){
+            case "todo":
+                ToDo newToDo = new ToDo(input.split("todo",2)[1].trim());
+                dataStorage.add(newToDo);
+                System.out.println("Got it. I've added this task:");
+                System.out.println(dataStorage.get(counter - 1).toString());
+                System.out.println("Now you have " + Integer.toString(counter) + " tasks in the list.");
+                counter++;
+                break;
+            case "deadline":
+                Deadline newDeadline = new Deadline(input.split(" ",2)[1].split("/by",2)[0].trim(),input.split(" ",2)[1].split("/by",2)[1].trim());
+                dataStorage.add(newDeadline);
+                System.out.println("Got it. I've added this task:");
+                System.out.println(dataStorage.get(counter - 1).toString());
+                System.out.println("Now you have " + Integer.toString(counter) + " tasks in the list.");
+                counter++;
+                break;
+            case "event":
+                Event newEvent = new Event(input.split(" ",2)[1].split("/at",2)[0].trim(),input.split(" ",2)[1].split("/at",2)[1].trim());
+                dataStorage.add(newEvent);
+                System.out.println("Got it. I've added this task:");
+                System.out.println(dataStorage.get(counter - 1).toString());
+                System.out.println("Now you have " + Integer.toString(counter) + " tasks in the list.");
+                counter++;
+                break;
+            default:
+                System.out.println("Invalid Command");
+
+
+        }
+        return counter;
     }
 }
