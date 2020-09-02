@@ -8,11 +8,11 @@ public class Duke {
 
         boolean breakCheck = false;
         String input,firstWord;
-        Vector<Task> dataStorage = new Vector<Task>();
+        Vector<Task> dataStorage = new Vector<>();
         int counter = 1;
         Scanner in = new Scanner(System.in);
 
-        while(breakCheck == false) {
+        while(!breakCheck) {
             input = in.nextLine().trim();
             firstWord = input.split(" ",2)[0];
 
@@ -26,7 +26,7 @@ public class Duke {
                     break;
 
                 case "list":
-                    printList(dataStorage);
+                    printList(dataStorage,counter);
                     break;
 
                 case "done":
@@ -63,13 +63,9 @@ public class Duke {
         }
     }
 
-    private static void printList(Vector<Task> dataStorage) {
-        Iterator<Task> i = dataStorage.iterator();
-        int listCounter = 1;
-        while(i.hasNext()){
-            Task printTask = i.next();
-            System.out.println(listCounter + "." + dataStorage.get(listCounter - 1).toString());
-            listCounter++;
+    private static void printList(Vector<Task> dataStorage,int counter) {
+        for (int i = 0; i<counter-1; i++){
+            System.out.println((i+1) + "." + dataStorage.get(i).toString());
         }
     }
 
@@ -80,7 +76,7 @@ public class Duke {
                 dataStorage.add(newToDo);
                 System.out.println("Got it. I've added this task:");
                 System.out.println(dataStorage.get(counter - 1).toString());
-                System.out.println("Now you have " + Integer.toString(counter) + " tasks in the list.");
+                System.out.println("Now you have " + counter + " tasks in the list.");
                 counter++;
                 break;
             case "deadline":
@@ -88,7 +84,7 @@ public class Duke {
                 dataStorage.add(newDeadline);
                 System.out.println("Got it. I've added this task:");
                 System.out.println(dataStorage.get(counter - 1).toString());
-                System.out.println("Now you have " + Integer.toString(counter) + " tasks in the list.");
+                System.out.println("Now you have " + counter + " tasks in the list.");
                 counter++;
                 break;
             case "event":
@@ -96,7 +92,7 @@ public class Duke {
                 dataStorage.add(newEvent);
                 System.out.println("Got it. I've added this task:");
                 System.out.println(dataStorage.get(counter - 1).toString());
-                System.out.println("Now you have " + Integer.toString(counter) + " tasks in the list.");
+                System.out.println("Now you have " + counter + " tasks in the list.");
                 counter++;
                 break;
             default:
