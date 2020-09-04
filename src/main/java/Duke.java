@@ -55,7 +55,7 @@ public class Duke {
             replacement.isDone = true;
             dataStorage.set(completedIndex-1,replacement);
             System.out.println("Nice! I've marked this task as done: ");
-            System.out.println("[" + dataStorage.get(completedIndex-1).getStatusIcon() + "]" + dataStorage.get(completedIndex-1).description);
+            System.out.println("[" + (counter-1) + "]" + dataStorage.get(completedIndex-1).toString());
         }else if(completedIndex <= counter && dataStorage.get(completedIndex - 1).isDone){
             System.out.println("The task has already been marked as completed.");
         }else{
