@@ -1,4 +1,5 @@
-import java.util.Iterator;
+package duke;
+
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -51,11 +52,25 @@ public class Duke {
         int completedIndex = Integer.parseInt(input.split(" ")[1].trim());
 
         if(completedIndex <= counter && !dataStorage.get(completedIndex - 1).isDone){
-            Task replacement = new Task(dataStorage.get(completedIndex-1).description);
-            replacement.isDone = true;
-            dataStorage.set(completedIndex-1,replacement);
+            if(dataStorage.get(completedIndex-1) instanceof Event){
+                Event replacement = new Event(dataStorage.get(completedIndex-1).description,  ((Event) dataStorage.get(completedIndex-1)).at);
+                replacement.isDone = true;
+                dataStorage.set(completedIndex-1,replacement);
+            }else if(dataStorage.get(completedIndex-1) instanceof  ToDo){
+                ToDo replacement = new ToDo(dataStorage.get(completedIndex-1).description);
+                replacement.isDone = true;
+                dataStorage.set(completedIndex-1,replacement);
+            }else if(dataStorage.get(completedIndex-1) instanceof Deadline){
+                Deadline replacement = new Deadline(dataStorage.get(completedIndex-1).description, ((Deadline) dataStorage.get(completedIndex-1)).by);
+                replacement.isDone = true;
+                dataStorage.set(completedIndex-1,replacement);
+            }else{
+                Task replacement = new Task(dataStorage.get(completedIndex-1).description);
+                replacement.isDone = true;
+                dataStorage.set(completedIndex-1,replacement);
+            }
             System.out.println("Nice! I've marked this task as done: ");
-            System.out.println("[" + (counter-1) + "]" + dataStorage.get(completedIndex-1).toString());
+            System.out.println(dataStorage.get(completedIndex-1).toString());
         }else if(completedIndex <= counter && dataStorage.get(completedIndex - 1).isDone){
             System.out.println("The task has already been marked as completed.");
         }else{
