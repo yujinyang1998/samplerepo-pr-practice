@@ -16,4 +16,24 @@ public class SystemMessages {
     public static void goodbyeMessage() {
         System.out.println("Bye. Hope to see you again soon!\n");
     }
+
+    public static void userPrompt(){
+        System.out.println("Please enter something.");
+    }
+
+    public static void markedAsDone(){
+        System.out.println("Nice! I've marked this task as done: ");
+    }
+
+    public static void addedTask(){
+        System.out.println("Got it. I've added this task:");
+    }
+
+    public static void tasksCounter(int i){
+        System.out.println("Now you have " + i + " tasks in the list.");
+    }
+
+    public static void removedTask(){
+        System.out.println("Noted. I've removed this task:");
+    }
 }

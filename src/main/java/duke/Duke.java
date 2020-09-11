@@ -24,24 +24,29 @@ public class Duke {
 
             try {
                 switch (firstWord.toLowerCase()) {
-                    case "bye":
-                        breakCheck = true;
-                        break;
+                case "bye":
+                    breakCheck = true;
+                    break;
 
-                    case "":
-                        System.out.println("Please enter something.");
-                        break;
+                case "":
+                    SystemMessages.userPrompt();
+                    break;
 
-                    case "list":
-                        printList(dataStorage, counter);
-                        break;
+                case "list":
+                    printList(dataStorage, counter);
+                    break;
 
-                    case "done":
-                        markAsDone(input, dataStorage, counter);
-                        break;
+                case "done":
+                    markAsDone(input, dataStorage, counter);
+                    break;
 
-                    default:
-                        counter = addTask(input, dataStorage, counter);
+                case "delete":
+                    counter = deleteTask(input, dataStorage, counter);
+                    break;
+
+                default:
+                    counter = addTask(input, dataStorage, counter);
+                    break;
                 }
             } catch (DukeException e){
                 System.out.println(e.description);
@@ -51,6 +56,32 @@ public class Duke {
         SystemMessages.goodbyeMessage();
     }
 
+    private static int deleteTask(String input, Vector<Task> dataStorage, int counter) throws DukeException{
+        if(input.trim().toLowerCase().equals("delete")) {
+            throw new DukeException("No number entered");
+        }
+        if(counter <= 1){
+            throw new DukeException("Please add something first.");
+        }
+
+        int deleteIndex = Integer.parseInt(input.split(" ")[1].trim());
+        //checking for invalid input
+        if(input.split(" ").length>2 || !input.split(" ")[1].matches("^-?\\d+$") || deleteIndex<=0){
+            throw new DukeException("Invalid input.");
+        }
+        
+        if(deleteIndex <= counter) {
+            SystemMessages.removedTask();
+            System.out.println(dataStorage.get(deleteIndex-1).toString());
+            dataStorage.remove(deleteIndex - 1);
+            counter--;
+            SystemMessages.tasksCounter(counter - 1);
+            return counter;
+        }else{
+            throw new DukeException("This task does not exist.");
+        }
+    }
+
     private static void markAsDone(String input, Vector<Task> dataStorage, int counter) throws DukeException{
         int completedIndex = Integer.parseInt(input.split(" ")[1].trim());
 
@@ -58,7 +89,7 @@ public class Duke {
         if(input.split(" ").length>2 || !input.split(" ")[1].matches("^-?\\d+$") || completedIndex<0){
             throw new DukeException("Invalid input.");
         }
-        
+
         if(completedIndex <= counter && !dataStorage.get(completedIndex - 1).isDone){
             if(dataStorage.get(completedIndex-1) instanceof Event){
                 Event replacement = new Event(dataStorage.get(completedIndex-1).description,  ((Event) dataStorage.get(completedIndex-1)).at);
@@ -77,7 +108,7 @@ public class Duke {
                 replacement.isDone = true;
                 dataStorage.set(completedIndex-1,replacement);
             }
-            System.out.println("Nice! I've marked this task as done: ");
+            SystemMessages.markedAsDone();
             System.out.println(dataStorage.get(completedIndex-1).toString());
         }else if(completedIndex <= counter && dataStorage.get(completedIndex - 1).isDone){
             throw new DukeException("The task has already been marked as completed.");
@@ -85,6 +116,7 @@ public class Duke {
             throw new DukeException("This task does not exist.");
         }
     }
+
 
     private static void printList(Vector<Task> dataStorage,int counter) throws DukeException{
         if(counter <= 0){
@@ -97,34 +129,32 @@ public class Duke {
 
     private static int addTask(String input, Vector<Task> dataStorage, int counter) throws DukeException{
         switch (input.toLowerCase().split(" ")[0]){
-            case "todo":
-                ToDo newToDo = new ToDo(input.split("todo",2)[1].trim());
-                dataStorage.add(newToDo);
-                System.out.println("Got it. I've added this task:");
-                System.out.println(dataStorage.get(counter - 1).toString());
-                System.out.println("Now you have " + counter + " tasks in the list.");
-                counter++;
-                break;
-            case "deadline":
-                Deadline newDeadline = new Deadline(input.split(" ",2)[1].split("/by",2)[0].trim(),input.split(" ",2)[1].split("/by",2)[1].trim());
-                dataStorage.add(newDeadline);
-                System.out.println("Got it. I've added this task:");
-                System.out.println(dataStorage.get(counter - 1).toString());
-                System.out.println("Now you have " + counter + " tasks in the list.");
-                counter++;
-                break;
-            case "event":
-                Event newEvent = new Event(input.split(" ",2)[1].split("/at",2)[0].trim(),input.split(" ",2)[1].split("/at",2)[1].trim());
-                dataStorage.add(newEvent);
-                System.out.println("Got it. I've added this task:");
-                System.out.println(dataStorage.get(counter - 1).toString());
-                System.out.println("Now you have " + counter + " tasks in the list.");
-                counter++;
-                break;
-            default:
-                throw new DukeException("Invalid Command");
-
-
+        case "todo":
+            ToDo newToDo = new ToDo(input.split("todo",2)[1].trim());
+            dataStorage.add(newToDo);
+            SystemMessages.addedTask();
+            System.out.println(dataStorage.get(counter - 1).toString());
+            SystemMessages.tasksCounter(counter);
+            counter++;
+            break;
+        case "deadline":
+            Deadline newDeadline = new Deadline(input.split(" ",2)[1].split("/by",2)[0].trim(),input.split(" ",2)[1].split("/by",2)[1].trim());
+            dataStorage.add(newDeadline);
+            SystemMessages.addedTask();
+            System.out.println(dataStorage.get(counter - 1).toString());
+            SystemMessages.tasksCounter(counter);
+            counter++;
+            break;
+        case "event":
+            Event newEvent = new Event(input.split(" ",2)[1].split("/at",2)[0].trim(),input.split(" ",2)[1].split("/at",2)[1].trim());
+            dataStorage.add(newEvent);
+            SystemMessages.addedTask();
+            System.out.println(dataStorage.get(counter - 1).toString());
+            SystemMessages.tasksCounter(counter);
+            counter++;
+            break;
+        default:
+            throw new DukeException("Invalid Command");
         }
         return counter;
     }
