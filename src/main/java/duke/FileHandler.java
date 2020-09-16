@@ -19,10 +19,11 @@ public class FileHandler {
     public static int openFile(Vector<Task> dataStorage, int counter){
         try{
             file = new File("Saves/Duke.txt");
+            file.getParentFile().mkdirs();
             file.createNewFile();
             counter = readFile(dataStorage,counter);
         } catch (IOException e) {
-            System.out.println("Error, Directory not found.");
+
         }
         return counter;
     }

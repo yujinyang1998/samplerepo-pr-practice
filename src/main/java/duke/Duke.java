@@ -23,7 +23,6 @@ public class Duke {
 
         FileHandler file = new FileHandler();
         counter = file.openFile(dataStorage,counter);
-        System.out.println(counter);
         while(!breakCheck) {
             input = in.nextLine().trim();
             firstWord = input.split(" ",2)[0];
@@ -39,7 +38,6 @@ public class Duke {
                     break;
 
                 case "list":
-                    System.out.println(counter);
                     printList(dataStorage, counter);
                     break;
 
