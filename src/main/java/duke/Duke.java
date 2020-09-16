@@ -1,15 +1,18 @@
 package duke;
 
+import duke.exception.DukeException;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.task.Task;
 import duke.task.ToDo;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.Vector;
 
 public class Duke {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         SystemMessages.welcomeMessage();
 
         boolean breakCheck = false;
@@ -18,6 +21,9 @@ public class Duke {
         int counter = 1;
         Scanner in = new Scanner(System.in);
 
+        FileHandler file = new FileHandler();
+        counter = file.openFile(dataStorage,counter);
+        System.out.println(counter);
         while(!breakCheck) {
             input = in.nextLine().trim();
             firstWord = input.split(" ",2)[0];
@@ -33,6 +39,7 @@ public class Duke {
                     break;
 
                 case "list":
+                    System.out.println(counter);
                     printList(dataStorage, counter);
                     break;
 
@@ -51,8 +58,8 @@ public class Duke {
             } catch (DukeException e){
                 System.out.println(e.description);
             }
+            file.updateFile(dataStorage,counter);
         }
-
         SystemMessages.goodbyeMessage();
     }
 
@@ -61,10 +68,11 @@ public class Duke {
             throw new DukeException("No number entered");
         }
         if(counter <= 1){
-            throw new DukeException("Please add something first.");
+            throw new DukeException("Please add something to the list first.");
         }
 
         int deleteIndex = Integer.parseInt(input.split(" ")[1].trim());
+
         //checking for invalid input
         if(input.split(" ").length>2 || !input.split(" ")[1].matches("^-?\\d+$") || deleteIndex<=0){
             throw new DukeException("Invalid input.");
@@ -83,6 +91,13 @@ public class Duke {
     }
 
     private static void markAsDone(String input, Vector<Task> dataStorage, int counter) throws DukeException{
+        if(input.trim().toLowerCase().equals("done")) {
+            throw new DukeException("No number entered");
+        }
+        if(counter <= 1){
+            throw new DukeException("Please add something to the list first.");
+        }
+
         int completedIndex = Integer.parseInt(input.split(" ")[1].trim());
 
         //checking for invalid input
