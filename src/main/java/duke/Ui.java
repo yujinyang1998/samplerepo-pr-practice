@@ -1,6 +1,6 @@
 package duke;
 
-public class SystemMessages {
+public class Ui {
     public static void welcomeMessage(){
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
