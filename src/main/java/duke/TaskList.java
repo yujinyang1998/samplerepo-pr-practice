@@ -67,4 +67,55 @@ public class TaskList {
         }
         return counter;
     }
+
+    static void printList(Vector<Task> dataStorage, int counter) throws DukeException{
+        if(counter <= 0){
+            throw new DukeException("Please add something to the list.");
+        }
+        for (int i = 0; i<counter-1; i++){
+            System.out.println((i+1) + "." + dataStorage.get(i).toString());
+        }
+    }
+
+    static void markAsDone(String input, Vector<Task> dataStorage, int counter) throws DukeException{
+        if(input.trim().toLowerCase().equals("done")) {
+            throw new DukeException("No number entered");
+        }
+        if(counter <= 1){
+            throw new DukeException("Please add something to the list first.");
+        }
+
+        int completedIndex = Integer.parseInt(input.split(" ")[1].trim());
+
+        //checking for invalid input
+        if(input.split(" ").length>2 || !input.split(" ")[1].matches("^-?\\d+$") || completedIndex<0){
+            throw new DukeException("Invalid input.");
+        }
+
+        if(completedIndex <= counter && !dataStorage.get(completedIndex - 1).isDone){
+            if(dataStorage.get(completedIndex-1) instanceof Event){
+                Event replacement = new Event(dataStorage.get(completedIndex-1).description,  ((Event) dataStorage.get(completedIndex-1)).at);
+                replacement.isDone = true;
+                dataStorage.set(completedIndex-1,replacement);
+            }else if(dataStorage.get(completedIndex-1) instanceof ToDo){
+                ToDo replacement = new ToDo(dataStorage.get(completedIndex-1).description);
+                replacement.isDone = true;
+                dataStorage.set(completedIndex-1,replacement);
+            }else if(dataStorage.get(completedIndex-1) instanceof Deadline){
+                Deadline replacement = new Deadline(dataStorage.get(completedIndex-1).description, ((Deadline) dataStorage.get(completedIndex-1)).by);
+                replacement.isDone = true;
+                dataStorage.set(completedIndex-1,replacement);
+            }else{
+                Task replacement = new Task(dataStorage.get(completedIndex-1).description);
+                replacement.isDone = true;
+                dataStorage.set(completedIndex-1,replacement);
+            }
+            Ui.markedAsDone();
+            System.out.println(dataStorage.get(completedIndex-1).toString());
+        }else if(completedIndex <= counter && dataStorage.get(completedIndex - 1).isDone){
+            throw new DukeException("The task has already been marked as completed.");
+        }else{
+            throw new DukeException("This task does not exist.");
+        }
+    }
 }
