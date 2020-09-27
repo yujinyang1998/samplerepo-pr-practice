@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.Vector;
 
-public class FileHandler {
+public class Storage {
 
     private static File file = null;
     private static Scanner scanner;
