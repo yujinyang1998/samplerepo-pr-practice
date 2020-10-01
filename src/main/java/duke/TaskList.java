@@ -9,6 +9,14 @@ import duke.task.ToDo;
 import java.util.Vector;
 
 public class TaskList {
+    /**
+     * Takes the user input, check if it is a number and deletes the task according to the number.
+     * @param input the input of the user
+     * @param dataStorage the vector list of all the tasks
+     * @param counter the number of tasks in the list
+     * @return the number of tasks in the list
+     * @throws DukeException if there was no input/invalid input/list empty
+     */
     static int deleteTask(String input, Vector<Task> dataStorage, int counter) throws DukeException {
         if(input.trim().toLowerCase().equals("delete")) {
             throw new DukeException("No number entered");
@@ -36,6 +44,14 @@ public class TaskList {
         }
     }
 
+    /**
+     * Adds a task to the vector list according to the user input
+     * @param input the input of the user
+     * @param dataStorage the vector list of all the tasks
+     * @param counter the number of tasks in the list
+     * @return the number of tasks in the list
+     * @throws DukeException if input did not fit the format
+     */
     static int addTask(String input, Vector<Task> dataStorage, int counter) throws DukeException{
         switch (input.toLowerCase().split(" ")[0]){
         case "todo":
@@ -68,6 +84,12 @@ public class TaskList {
         return counter;
     }
 
+    /**
+     * Prints all the tasks from the vector list to the user
+     * @param dataStorage the vector list of all the tasks
+     * @param counter the number of tasks in the list
+     * @throws DukeException if list is empty
+     */
     static void printList(Vector<Task> dataStorage, int counter) throws DukeException{
         if(counter <= 0){
             throw new DukeException("Please add something to the list.");
@@ -77,6 +99,13 @@ public class TaskList {
         }
     }
 
+    /**
+     * Marks a task as done
+     * @param input the input of the user
+     * @param dataStorage the vector list of all the tasks
+     * @param counter the number of tasks in the list
+     * @throws DukeException if there was no input/invalid input/list empty
+     */
     static void markAsDone(String input, Vector<Task> dataStorage, int counter) throws DukeException{
         if(input.trim().toLowerCase().equals("done")) {
             throw new DukeException("No number entered");
@@ -119,6 +148,13 @@ public class TaskList {
         }
     }
 
+    /**
+     * Finds all matching tasks and display them to the user
+     * @param input the input of the user
+     * @param dataStorage the vector list of all the tasks
+     * @param counter the number of tasks in the list
+     * @throws DukeException if list is empty
+     */
     static void findTask(String input, Vector<Task> dataStorage, int counter) throws DukeException {
         if(counter <= 0){
             throw new DukeException("Please add something to the list.");

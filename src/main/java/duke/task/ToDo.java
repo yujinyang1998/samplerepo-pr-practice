@@ -6,6 +6,10 @@ public class ToDo extends Task {
         super(description);
     }
 
+    /**
+     * Overrides the toString() function
+     * @return
+     */
     @Override
     public String toString() {
         return "[T]" + super.toString();

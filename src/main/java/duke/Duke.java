@@ -9,7 +9,7 @@ import java.util.Vector;
 
 public class Duke {
     public static boolean breakCheck = false;
-
+    
     public static void main(String[] args) throws IOException {
 
         Ui.welcomeMessage();

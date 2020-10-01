@@ -5,7 +5,17 @@ import duke.task.Task;
 
 import java.util.Vector;
 
+
 public class Parser {
+    /**
+     * Checks the user input to determine the command
+     * @param firstWord the first word in the users input
+     * @param input the entire user input
+     * @param dataStorage the vector list of all the tasks
+     * @param counter the number of tasks in the list
+     * @return the number of tasks in the list
+     * @throws DukeException
+     */
     public static int checkInput(String firstWord, String input, Vector<Task> dataStorage, int counter) throws DukeException {
         switch (firstWord.toLowerCase()) {
             case "bye":

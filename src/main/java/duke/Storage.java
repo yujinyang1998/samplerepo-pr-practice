@@ -16,6 +16,12 @@ public class Storage {
     private static File file = null;
     private static Scanner scanner;
 
+    /**
+     * Scans for a save file and reads from it if it exists else it creates a new save file
+     * @param dataStorage the vector list of all the tasks
+     * @param counter the number of tasks in the list
+     * @return the number of tasks in the list
+     */
     public static int openFile(Vector<Task> dataStorage, int counter){
         try{
             file = new File("Saves/Duke.txt");
@@ -28,7 +34,12 @@ public class Storage {
         return counter;
     }
 
-
+    /**
+     *
+     * @param dataStorage the vector list of all the tasks the vector list of all the tasks
+     * @param counter the number of tasks in the list
+     * @throws IOException
+     */
     public static void updateFile(Vector<Task> dataStorage, int counter) throws IOException {
         FileWriter fw = new FileWriter(file.getPath());
         for (int i = 0; i < counter - 1; i++) {
@@ -40,6 +51,13 @@ public class Storage {
         fw.close();
     }
 
+    /**
+     * Reads the data from the save file
+     * @param dataStorage the vector list of all the tasks
+     * @param counter the number of tasks in the list
+     * @return the number of tasks in the list
+     * @throws FileNotFoundException
+     */
     public static int readFile(Vector<Task> dataStorage,int counter) throws FileNotFoundException {
         Scanner s = new Scanner(file); // create a Scanner using the File as the source
         dataStorage.clear();
