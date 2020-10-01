@@ -97,7 +97,24 @@ Expected outcome:
     Noted. I've removed this task:
     [D][✓]eat beans (by: wednesday next week)
     Now you have 2 tasks in the list.
-### Feature 7: bye
+
+### Feature 7: find
+deletes a task
+
+    Usage:
+    format - find <name of thing to find>
+
+Example of usage: 
+
+    find apple
+
+Expected outcome:
+
+    find apple
+    Here are the matching tasks in your list:
+    1.[E][✘]eat apples (at: 090620 10am)
+
+### Feature 8: bye
 Closes Duke
 
     Usage:
