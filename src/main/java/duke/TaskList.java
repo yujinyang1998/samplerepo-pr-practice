@@ -92,6 +92,7 @@ public class TaskList {
             throw new DukeException("Invalid input.");
         }
 
+        //marking as done
         if(completedIndex <= counter && !dataStorage.get(completedIndex - 1).isDone){
             if(dataStorage.get(completedIndex-1) instanceof Event){
                 Event replacement = new Event(dataStorage.get(completedIndex-1).description,  ((Event) dataStorage.get(completedIndex-1)).at);
