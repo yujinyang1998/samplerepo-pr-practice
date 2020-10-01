@@ -1,5 +1,8 @@
 package duke;
 
+/**
+ * takes care of most of the messages to be displayed to the user
+ */
 public class Ui {
     public static void welcomeMessage(){
         String logo = " ____        _        \n"
@@ -35,5 +38,9 @@ public class Ui {
 
     public static void removedTask(){
         System.out.println("Noted. I've removed this task:");
+    }
+
+    public static void matchedTask(){
+        System.out.println("Here are the matching tasks in your list:");
     }
 }
