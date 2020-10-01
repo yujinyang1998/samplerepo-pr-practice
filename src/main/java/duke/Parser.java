@@ -28,6 +28,9 @@ public class Parser {
                 counter = TaskList.deleteTask(input, dataStorage, counter);
                 break;
 
+            case "find":
+                TaskList.findTask(input, dataStorage, counter);
+                break;
             default:
                 counter = TaskList.addTask(input, dataStorage, counter);
                 break;

@@ -21,7 +21,7 @@ public class Duke {
 
         Storage file = new Storage();
         counter = file.openFile(dataStorage,counter);
-        
+
         while(!breakCheck) {
             input = in.nextLine().trim();
             firstWord = input.split(" ",2)[0];

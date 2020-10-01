@@ -118,4 +118,21 @@ public class TaskList {
             throw new DukeException("This task does not exist.");
         }
     }
+
+    static void findTask(String input, Vector<Task> dataStorage, int counter) throws DukeException {
+        if(counter <= 0){
+            throw new DukeException("Please add something to the list.");
+        }
+
+        System.out.println("Here are the matching tasks in your list:");
+        int printCounter = 1;
+
+        for (int i = 0; i<counter-1; i++){
+            String toCheck = new String(dataStorage.get(i).toString());
+            if(toCheck.contains(input.substring(4).trim())){
+                System.out.println((printCounter) + "." + dataStorage.get(i).toString());
+                printCounter++;
+            }
+        }
+    }
 }
